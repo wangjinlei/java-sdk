@@ -138,7 +138,7 @@ SDK下载地址：[https://github.com/qiniu/java-sdk/tags](https://github.com/qi
 
 ##### 断点续上传
 
-用户在上传文件的时候也可以根据需求选择断点续上传的方式，此处所说的断点上传是指用户在某次上传过程中出现故障（比如断网，断点等异常情况）导致上传失败，再重新上传的时候只需要从上次上传失败处上传即可。用户可以根据具体应用的需求通过修改配置文件改变上传块（`com.qiniu.qbox``包下的 `Config` 文件中的 `PUT_CHUNK_SIZE` 对应的值）的大小来适应用户所处的网络环境。具体的示例代码可以参见我们在SDK中提供的 `ResumableGUIPutDemo` 以及 `ResumablePutDemo` 两个例子。
+用户在上传文件的时候也可以根据需求选择断点续上传的方式，此处所说的断点上传是指用户在某次上传过程中出现故障（比如断网，断点等异常情况）导致上传失败，再重新上传的时候只需要从上次上传失败处上传即可。用户可以根据具体应用的需求通过修改配置文件改变上传块（`com.qiniu.qbox` 包下的 `Config` 文件中的 `PUT_CHUNK_SIZE` 对应的值）的大小来适应用户所处的网络环境。具体的示例代码可以参见我们在SDK中提供的 `ResumableGUIPutDemo` 以及 `ResumablePutDemo` 两个例子。
 
 <a name="download"></a>
 
