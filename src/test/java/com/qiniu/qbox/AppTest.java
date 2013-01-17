@@ -33,6 +33,11 @@ public class AppTest
      */
     public void testApp()
     {
+    System.out.println("for test") ;
         assertTrue( true );
+    }
+    
+    public void testApp2() {
+    	assertTrue(true) ;
     }
 }
