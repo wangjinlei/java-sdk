@@ -81,11 +81,10 @@ SDK下载地址：[https://github.com/qiniu/java-sdk/tags](https://github.com/qi
 1. [开通七牛开发者帐号](https://dev.qiniutek.com/signup)
 2. [登录七牛开发者自助平台，查看 Access Key 和 Secret Key](https://dev.qiniutek.com/account/keys) 。
 
-在获取到 Access Key 和 Secret Key 之后，您可以在您的程序中调用如下两行代码进行初始化对接：
+在获取到 Access Key 和 Secret Key 之后，编辑com.qiniu.qbox包下的Config.java文件，确保其包含您从七牛开发者平台所获取的 Access Key 和 Secret Key：
 
-    Config.ACCESS_KEY = "[ENTER YOUR ACCESS_KEY HERE!]"
-    Config.SECRET_KEY = "[ENTER YOUR SECRET_KEY HERE!]"
-
+    public static String ACCESS_KEY = "<Please apply your access key>";
+    public static String SECRET_KEY = "<Please apply your secret key>";
 
 <a name="Usage"></a>
 
@@ -101,37 +100,45 @@ SDK下载地址：[https://github.com/qiniu/java-sdk/tags](https://github.com/qi
 
 #### 生成上传授权凭证（uploadToken）
 
+要上传一个文件，首先需要调用 SDK 提供的`com.qiniu.qbox.auth`包下的`AuthPolicy`这个类来获取一个经过授权用于临时匿名上传的 `upload_token`——经过数字签名的一组数据信息，该 `upload_token` 作为文件上传流中 `multipart/form-data` 的一部分进行传输。 
 
+ 示例代码如下： 
 
-**参数**
-
-
-**返回值**
-
+	String bucketName = "bucket" ; 
+	AuthPolicy policy = new AuthPolicy(bucketName, 3600); 
+	String upToken = policy.makeAuthTokenString(); 
 
 #### 服务端上传文件
 
+通过 `com.qiniu.qbox.rs` 包下的 `putFileWithToken` 方法可在客户方的业务服务器上直接往七牛云存储上传文件。
 
+ 示例代码如下：
 
-**参数**
+	String key = "upload.jpg" ;
+	String dir = System.getProperty("user.dir") ;
+	String absFilePath = dir + "/" + key ;
 
-
+	String bucketName = "bucket" ;
+	AuthPolicy policy = new AuthPolicy(bucketName, 3600);
+	String uptoken = policy.makeAuthTokenString();
+	
+	PutFileRet putRet = null ;
+	putRet = RSClient.putFileWithToken(uptoken, bucketName, key, absFilePath, "", "", "", "2") ;
 
 **返回值**
 
+上传成功，返回如下一个 Hash：
+
+    {"hash"=>"------ to fill -------- "}
+
+上传失败，会返回相应的错误。
 
 
 <a name="resumable-upload"></a>
 
-##### 开启断点续上传
+##### 断点续上传
 
-
-
-**参数详解**
-
-
-
-
+用户在上传文件的时候也可以根据需求选择断点续上传的方式，此处所说的断点上传是指用户在某次上传过程中出现故障（比如断网，断点等异常情况）导致上传失败，再重新上传的时候只需要从上次上传失败处上传即可。用户可以根据具体应用的需求通过修改配置文件改变上传块（`com.qiniu.qbox``包下的 `Config` 文件中的 `PUT_CHUNK_SIZE` 对应的值）的大小来适应用户所处的网络环境。具体的示例代码可以参见我们在SDK中提供的 `ResumableGUIPutDemo` 以及 `ResumablePutDemo` 两个例子。
 
 <a name="download"></a>
 
@@ -208,14 +215,24 @@ SDK下载地址：[https://github.com/qiniu/java-sdk/tags](https://github.com/qi
 
 #### 查看单个文件属性信息
 
-   
-**参数**
+您可以调用资源表对象的 Stat() 方法并传入一个 Key（类似ID）来获取指定文件的相关信息。
 
+示例代码如下 :
 
+	// 实例化一个资源表对象，并获得一个相应的授权认证
+	String bucketName = "bucketName";
+	DigestAuthClient conn = new DigestAuthClient();
+	RSService rs = new RSService(conn, bucketName);
+	
+	// 获取资源表中特定文件信息
+	StatRet statRet = rs.stat(key);
 
-**返回值**
+如果请求成功，得到的 statRet 数组将会包含如下几个字段：
 
-
+	hash: <FileETag>
+	fsize: <FileSize>
+	putTime: <PutTime>
+	mimeType: <MimeType>
 
 
 <a name="copy"></a>
@@ -252,11 +269,17 @@ SDK下载地址：[https://github.com/qiniu/java-sdk/tags](https://github.com/qi
 
 ### 删除单个文件
 
-   
+要删除指定的文件，只需调用资源表对象的 Delete() 方法并传入 文件ID（key）作为参数即可。
 
-**参数**
+如下示例代码：
 
+	// 实例化一个资源表对象，并获得一个删除资源表中特定文件的授权认证
+	String bucketName = "bucketName";
+	DigestAuthClient conn = new DigestAuthClient();
+	RSService rs = new RSService(conn, bucketName);
 
+	// 删除资源表中的某个文件
+	DeleteRet deleteRet = rs.delete(key);
 
 
 <a name="batch"></a>
