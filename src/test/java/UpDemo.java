@@ -50,7 +50,7 @@ public class UpDemo {
 
 			PutFileRet putFileRet = RSClient.resumablePutFile(upClient, 
 					checksums, progresses, 
-					(ProgressNotifier)notif, (BlockProgressNotifier)notif, 
+					notif, notif, 
 					bucketName, key, "", f, fsize, "CustomMeta", "");
 
 			if (putFileRet.ok()) {

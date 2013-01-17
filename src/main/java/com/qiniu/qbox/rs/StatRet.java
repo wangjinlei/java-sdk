@@ -31,13 +31,13 @@ public class StatRet extends CallRet {
 		if (fsizeObject instanceof Long) {
 			this.fsize = (Long)fsizeObject;
 		} else if (fsizeObject instanceof Integer) {
-			this.fsize = new Long((int)(Integer)fsizeObject);
+			this.fsize = new Long((Integer)fsizeObject);
 		}
 		Object putTimeObject = jsonObject.get("putTime");
 		if (putTimeObject instanceof Long) {
 			this.putTime = (Long)putTimeObject;
 		} else if (putTimeObject instanceof Integer) {
-			this.putTime = new Long((int)(Integer)putTimeObject);
+			this.putTime = new Long((Integer)putTimeObject);
 		}
 		this.mimeType = (String)jsonObject.get("mimeType");
 	}

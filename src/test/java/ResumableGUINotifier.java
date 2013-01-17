@@ -13,6 +13,7 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JProgressBar;
+import javax.swing.SwingConstants;
 import javax.swing.Timer;
 
 import org.json.JSONObject;
@@ -52,7 +53,7 @@ public class ResumableGUINotifier implements ProgressNotifier,
 		this.realSpeed = 0;
 		this.frame = new JFrame("断点续传测试");
 		// 创建一条垂直进度条
-		this.bar = new JProgressBar(JProgressBar.HORIZONTAL);
+		this.bar = new JProgressBar(SwingConstants.HORIZONTAL);
 
 		final JButton terminal = new JButton("退出");
 
@@ -82,6 +83,7 @@ public class ResumableGUINotifier implements ProgressNotifier,
 		// 以总任务量作为进度条的最大值
 		this.bar.setMaximum((int) this.amount);
 		Timer timer = new Timer(100, new ActionListener() {
+			@Override
 			public void actionPerformed(ActionEvent e) {
 				// 以任务的当前完成量设置进度条的value
 				bar.setValue((int) current);
@@ -94,6 +96,7 @@ public class ResumableGUINotifier implements ProgressNotifier,
 		timer.start();
 
 		terminal.addActionListener(new ActionListener() {
+			@Override
 			public void actionPerformed(ActionEvent e) {
 				System.exit(0);
 			}

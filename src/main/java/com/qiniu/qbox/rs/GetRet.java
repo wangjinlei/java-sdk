@@ -34,7 +34,7 @@ public class GetRet extends CallRet {
 			if (fsizeObject instanceof Long) {
 				this.fsize = (Long)fsizeObject;
 			} else if (fsizeObject instanceof Integer) {
-				this.fsize = new Long((int)(Integer)fsizeObject);
+				this.fsize = new Long((Integer)fsizeObject);
 			}
 			this.mimeType = (String)jsonObject.get("mimeType");
 			this.url = (String)jsonObject.get("url");

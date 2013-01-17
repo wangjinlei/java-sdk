@@ -101,16 +101,16 @@ public class ResumableGUIPutDemo {
 			long fsize = f.length();
 			int blockCount = UpService.blockCount(fsize);
 			String progressFile = inputFile + ".progress" + fsize;
-			String[] checksums = new String[(int) blockCount];
-			BlockProgress[] progresses = new BlockProgress[(int) blockCount];
+			String[] checksums = new String[blockCount];
+			BlockProgress[] progresses = new BlockProgress[blockCount];
 
 			readProgress(progressFile, checksums, progresses, blockCount);
 
 			ResumableGUINotifier notif = new ResumableGUINotifier(progressFile ,progresses ,fsize);
 
 			PutFileRet putFileRet = RSClient.resumablePutFile(upClient,
-					checksums, progresses, (ProgressNotifier) notif,
-					(BlockProgressNotifier) notif, bucketName, key, "", f,
+					checksums, progresses, notif,
+					notif, bucketName, key, "", f,
 					fsize, "CustomMeta", "");
 
 			if (putFileRet.ok()) {

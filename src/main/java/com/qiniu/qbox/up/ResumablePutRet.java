@@ -64,9 +64,9 @@ public class ResumablePutRet extends CallRet {
 		this.setHost(jsonObject.getString("host")) ;
 		Object crc32Object = jsonObject.get("crc32");
 		if (crc32Object instanceof Long) {
-			this.setCrc32((long)(Long)crc32Object);
+			this.setCrc32((Long)crc32Object);
 		} else if (crc32Object instanceof Integer) {
-			this.setCrc32((long)(int)(Integer)crc32Object);
+			this.setCrc32((Integer)crc32Object);
 		}
 	}
 }
