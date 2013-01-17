@@ -8,8 +8,6 @@ import com.qiniu.qbox.auth.UpTokenClient;
 import com.qiniu.qbox.rs.PutFileRet;
 import com.qiniu.qbox.rs.RSClient;
 import com.qiniu.qbox.up.BlockProgress;
-import com.qiniu.qbox.up.BlockProgressNotifier;
-import com.qiniu.qbox.up.ProgressNotifier;
 import com.qiniu.qbox.up.UpService;
 
 
