@@ -16,6 +16,7 @@ import com.qiniu.qbox.rs.RSClient;
 import com.qiniu.qbox.rs.RSService;
 
 public class FileopTest extends TestCase {
+	public String bucketName ;
 	
 	public void setUp() {
 		Config.ACCESS_KEY =  System.getenv("QINIU_ACCESS_KEY");
@@ -23,7 +24,7 @@ public class FileopTest extends TestCase {
 		Config.UP_HOST = System.getenv("QINIU_UP_HOST") ;
 		Config.RS_HOST = System.getenv("QINIU_RS_HOST") ;
 		Config.IO_HOST = System.getenv("QINIU_IO_HOST") ;
-		String bucketName = System.getenv("QINIU_TEST_BUCKET") ;
+		this.bucketName = System.getenv("QINIU_TEST_BUCKET") ;
 		
 		assertNotNull(Config.ACCESS_KEY) ;
 		assertNotNull(Config.SECRET_KEY) ;
@@ -35,23 +36,23 @@ public class FileopTest extends TestCase {
 	
 	public void testUploadWithToken() throws Exception {
 		String key = "upload.jpg" ;
-		String bucketName = System.getenv("QINIU_TEST_BUCKET") ;
+		//String bucketName = System.getenv("QINIU_TEST_BUCKET") ;
 		String expectHash = "FnM8Lt3Mk6yCcYPaosvnAOwWZqyM" ;
 		String dir = System.getProperty("user.dir") ;
 		String absFilePath = dir + "/res/" + key ;
 		
 		AuthPolicy policy = new AuthPolicy(bucketName, 3600);
 		String token = policy.makeAuthTokenString();
-		PutFileRet putRet = RSClient.putFileWithToken(token, bucketName, key, absFilePath, "", "", "", "") ;
+		PutFileRet putRet = RSClient.putFileWithToken(token, this.bucketName, key, absFilePath, "", "", "", "") ;
 		String hash = putRet.getHash() ;
 		assertTrue(putRet.ok() && (expectHash.equals(hash))) ;
 	}
 	
 	public GetRet rsGet() throws Exception {
 		String key = "upload.jpg" ;
-		String bucketName = System.getenv("QINIU_TEST_BUCKET") ;
+		//String bucketName = System.getenv("QINIU_TEST_BUCKET") ;
 		DigestAuthClient conn = new DigestAuthClient();
-		RSService rs = new RSService(conn, bucketName);
+		RSService rs = new RSService(conn, this.bucketName);
 		GetRet getRet = rs.get(key, key);
 		return getRet ;
 	}
