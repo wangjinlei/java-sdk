@@ -348,64 +348,55 @@ SDK下载地址：[https://github.com/qiniu/java-sdk/tags](https://github.com/qi
 
 ##### 查看图片属性信息
 
-    
+使用 SDK 提供的 `com.qiniu.qbox.fileop` 包下的 `ImageInfo` 类可以基于一张存储于七牛云存储服务器上的图片，针对其下载链接来获取该张图片的属性信息。
+首先，您要获得该图片的下载链接，请参见[查看单个文件属性信息](#stat)
 
-**参数**
+示例代码如下：
+ 
+    String imageUrl = "Your image url on the qiniu server" ;
+    ImageInfoRet imgInfoRet = ImageInfo.call(imageUrl) ;
 
+如果请求失败，返回 响应的错误信息；否则，返回如下一个 Hash 类型的结构：
 
-
-**返回值**
-
+    {
+        "format"     => "jpeg",    // 原始图片类型 
+        "width"      => 640,       // 原始图片宽度，单位像素  
+        "height"     => 425,       // 原始图片高度，单位像素 
+        "colorModel" => "ycbcr"    // 原始图片着色模式 
+    } 
 
 
 <a name="image-exif"></a>
 
 ##### 查看图片EXIF信息
 
-    
+使用 SDK 提供的 `com.qiniu.qbox.fileop` 包下的 `ImageInfo` 类可以基于一张存储于七牛云存储服务器上的原始图片图片，取到该图片的 EXIF 信息。
 
-**参数**
+示例代码如下：
 
+    String imageUrl = "Your image url on the qiniu server" ;
+    CallRet imageExifRet = ImageExif.call(imageUrl) ;     
 
+如果参数 `imageUrl` 所代表的图片没有 EXIF 信息，返回 `false`。否则，返回一个包含 EXIF 信息的 Hash 结构。
 
-**返回值**
-
-如果参数 `url` 所代表的图片没有 EXIF 信息，返回 `false`。否则，返回一个包含 EXIF 信息的 Hash 结构。
 
 <a name="image-mogrify-for-preview"></a>
 
 ##### 图像在线处理（缩略、裁剪、旋转、转化）
 
+使用 SDK 提供的 `com.qiniu.qbox.fileop` 包下的 `ImageView` 类将一个存储在七牛云存储的图片进行缩略、裁剪、旋转和格式转化处理，该方法返回一个可以直接预览缩略图的URL。
 
-**参数**
+示例代码如下：
 
+    String imageUrl = "Your image url on the qiniu server" ;
+    ImageMogrify imgMogr = new ImageMogrify() ;
+    imgMogr.thumbnail = "!120x120r" ;
+    imgMogr.gravity = "center" ;
+    imgMogr.crop = "!120x120a0a0" ;
+    imgMogr.quality = 85 ;
+    imgMogr.rotate = 45 ;
+    imgMogr.format = "jpg" ;
+    imgMogr.autoOrient = true ;
+    String imgMogrRequestUrl = imgMogr.makeRequest(imageUrl) ;
 
-
-**返回值**
-
-
-
-#### 图像在线处理（缩略、裁剪、旋转、转化）后并持久化存储
-
-
-
-**参数**
-
-
-**返回值**
-
-示例代码：
-
-
-
-
-<a name="Contributing"></a>
-
-## 贡献代码
-
-
-
-<a name="License"></a>
-
-## 许可证
-
+关于参数的具体说明请参见：https://github.com/v3/api/foimg/#fo-imageMogr
