@@ -71,7 +71,7 @@ public class FileopTest extends TestCase {
 	
 	public void testImageExif() throws Exception {
 		
-		GetRet getRet = this.rsGet() ;
+		GetRet getRet = this.rsGet();
 		assertTrue(getRet.ok()) ;
 		String url = getRet.getUrl() ;
 		CallRet callRet = ImageExif.call(url) ;
