@@ -54,7 +54,7 @@ public class FileopTest extends TestCase {
 		DigestAuthClient conn = new DigestAuthClient();
 		RSService rs = new RSService(conn, bucketName);
 		GetRet getRet = rs.get(key, key);
-		System.out.println("rsGet : " + getRet);
+		System.out.println("rsGet : " + getRet); 
 		return getRet ;
 	}
 	
