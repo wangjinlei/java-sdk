@@ -4,7 +4,7 @@ import junit.extensions.ActiveTestSuite;
 import junit.framework.Test;
 import junit.framework.TestSuite;
 
-public class AllTest {
+public class AllTestCase {
 	
 	public static Test suite(){ 
        TestSuite suite = new ActiveTestSuite();
