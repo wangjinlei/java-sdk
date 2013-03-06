@@ -334,7 +334,7 @@ public class RsTest extends TestCase {
 			assertTrue(deleteRet.ok());
 			List<CallRet> callRetList = deleteRet.results;
 			for (CallRet r : callRetList) {
-				assert(r.ok());
+				assert(r.ok()); 
 			}
 		}
 	}
