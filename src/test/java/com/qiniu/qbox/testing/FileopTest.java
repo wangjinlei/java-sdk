@@ -55,7 +55,7 @@ public class FileopTest extends TestCase {
 		RSService rs = new RSService(conn, bucketName);
 		GetRet getRet = rs.get(key, key);
 		System.out.println("rsGet : " + getRet);  
-		return getRet ;
+		return getRet;
 	}
 	
 	public void testImageInfo() throws Exception {
