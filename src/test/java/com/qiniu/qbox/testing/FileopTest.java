@@ -54,7 +54,8 @@ public class FileopTest extends TestCase {
 		DigestAuthClient conn = new DigestAuthClient();
 		RSService rs = new RSService(conn, bucketName);
 		GetRet getRet = rs.get(key, key);
-		System.out.println("rsGet : " + getRet);  
+		if (!getRet.ok())
+			System.out.println("rsGet : " + getRet);  
 		return getRet;
 	}
 	
@@ -64,7 +65,8 @@ public class FileopTest extends TestCase {
 		assertTrue(getRet.ok());
 		String url = getRet.getUrl();
 		CallRet callRet = ImageInfo.call(url);
-		System.out.println("imageInfo status code : " + callRet.statusCode 
+		if (!callRet.ok())
+			System.out.println("imageInfo status code : " + callRet.statusCode 
 				+ " exception : " + callRet.exception);
 		assertTrue("ImageInfo " + url + " failed!", callRet.ok());
 	}
@@ -75,7 +77,8 @@ public class FileopTest extends TestCase {
 		assertTrue(getRet.ok()) ;
 		String url = getRet.getUrl() ;
 		CallRet callRet = ImageExif.call(url) ;
-		System.out.println("imageExif status code : " + callRet.statusCode 
+		if (callRet.ok())
+			System.out.println("imageExif status code : " + callRet.statusCode 
 				+ " exception : " + callRet.exception);
 		// The upload image has no exif, which should return false.
 		// Here we use not operator to get uniform assertions.
@@ -95,7 +98,8 @@ public class FileopTest extends TestCase {
 		imgView.format = "jpg" ;
 		imgView.sharpen = 100 ;
 		CallRet imgViewRet = imgView.call(url) ;
-		System.out.println("image view status code : " + imgViewRet.statusCode 
+		if (!imgViewRet.ok()) 
+			System.out.println("image view status code : " + imgViewRet.statusCode 
 				+ " exception : " + imgViewRet.exception);
 		assertTrue("ImageView " + url + " failed!", imgViewRet.ok()) ;
 	}
@@ -115,7 +119,8 @@ public class FileopTest extends TestCase {
 		imgMogr.format = "jpg" ;
 		imgMogr.autoOrient = true ;
 		CallRet imgMogrRet = imgMogr.call(url) ;
-		System.out.println("imgMogr status code : " + imgMogrRet.statusCode 
+		if (!imgMogrRet.ok())
+			System.out.println("imgMogr status code : " + imgMogrRet.statusCode 
 				+ " exception : " + imgMogrRet.exception);
 		assertTrue("ImageMogr " + url + " failed!", imgMogrRet.ok()) ;
 	}
