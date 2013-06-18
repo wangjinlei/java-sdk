@@ -84,7 +84,7 @@ public class IoApi {
 	 */
 	public static String getUrl(String domain, String key, String downloadToken) {
 		String url = domain + "/" + key;
-		if (downloadToken == null || downloadToken == "") {
+		if (downloadToken == null || "".equals(downloadToken)) {
 			return url;
 		}
 		return url + "?token=" + downloadToken;

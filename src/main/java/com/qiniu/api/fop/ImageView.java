@@ -60,7 +60,7 @@ public class ImageView {
 		if (this.quality > 0) {
 			params.append("/q/" + this.quality);
 		}
-		if (this.format != null && this.format != "") {
+		if (this.format != null && !"".equals(this.format)) {
 			params.append("/format/" + this.format);
 		}
 		

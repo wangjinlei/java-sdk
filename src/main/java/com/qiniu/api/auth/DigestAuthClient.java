@@ -51,7 +51,7 @@ public class DigestAuthClient extends Client {
 		if (entity != null) {
 			org.apache.http.Header ct = entity.getContentType();
 			if (ct != null
-					&& ct.getValue() == "application/x-www-form-urlencoded") {
+					&& ct.getValue().equals("application/x-www-form-urlencoded")) {
 				ByteArrayOutputStream w = new ByteArrayOutputStream();
 				try {
 					entity.writeTo(w);
